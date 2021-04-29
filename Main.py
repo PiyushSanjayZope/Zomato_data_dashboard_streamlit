@@ -36,12 +36,12 @@ with dataset:
     st.header('Zomato Restaurants dataset')
     st.text('I found this dataset on Kaggle')
 
-    zomato_restaurants = get_data('data/zomato_restaurants_in_India.csv')
+    zomato_restaurants = get_data('data/zomato.csv')
     st.write(zomato_restaurants.head())
     
     
     st.subheader('Restaurant ID distribution on the Zomato Restaurants dataset')
-    rest_lcnrtng = pd.DataFrame(zomato_restaurants['res_id'].value_counts()).head(50)
+    rest_lcnrtng = pd.DataFrame(zomato_restaurants['Restaurant ID'].value_counts()).head(50)
     st.bar_chart(rest_lcnrtng)
 
 
@@ -66,7 +66,7 @@ with model_training:
     sel_col.text('Here is the list of features in my data: ')
     sel_col.write(zomato_restaurants.columns)
 
-    input_feature = sel_col.text_input('Which feature should be used as input feature?', 'res_id')
+    input_feature = sel_col.text_input('Which feature should be used as input feature?', 'Restaurant ID')
 
 
     if n_estimators == 'No limit':
@@ -75,7 +75,7 @@ with model_training:
         regr = RandomForestRegressor(max_depth=max_depth, n_estimators=n_estimators)
 
     X = zomato_restaurants[[input_feature]]
-    y = zomato_restaurants[['aggregate_rating']]
+    y = zomato_restaurants[['Aggregate rating']]
 
     regr.fit(X,y)
     prediction = regr.predict(y)
